@@ -18,7 +18,8 @@ class PalaceUser(FastHttpUser):
     def first_open_app(self):
         """
         Simulates a user opening the app for the first time, or reopening the app
-        after the cache has expired.
+        after the cache has expired. Based on testing with iOS app version 1.0.25
+        using MITMProxy to see what requests are made.
         """
         response = self.client.get("/libraries")
         json = response.json()
