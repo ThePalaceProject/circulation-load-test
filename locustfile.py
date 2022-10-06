@@ -1,7 +1,6 @@
 from urllib.parse import urlparse
 
 from gevent.pool import Pool
-
 from locust import FastHttpUser, task
 
 

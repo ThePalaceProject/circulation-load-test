@@ -3,6 +3,7 @@ build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core"]
 
 [tool.isort]
+known_third_party = ["locust"]
 profile = "black"
 
 [tool.poetry]
