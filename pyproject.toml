@@ -2,6 +2,9 @@
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core"]
 
+[tool.isort]
+profile = "black"
+
 [tool.poetry]
 authors = []
 description = "Basic load testing for Palace API"
