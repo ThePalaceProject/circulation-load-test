@@ -17,7 +17,8 @@ class PalaceUser(FastHttpUser):
     @task
     def first_open_app(self):
         """
-        Simulates a user opening the app for the first time.
+        Simulates a user opening the app for the first time, or reopening the app
+        after the cache has expired.
         """
         response = self.client.get("/libraries")
         json = response.json()
@@ -33,7 +34,8 @@ class PalaceUser(FastHttpUser):
                 ):
                     authentication_documents.append(link["href"])
 
-        pool = Pool()
+        # Concurrently fetch 10 documents at once
+        pool = Pool(size=10)
         for href in authentication_documents:
             pool.spawn(self.fetch, href)
         pool.join()
