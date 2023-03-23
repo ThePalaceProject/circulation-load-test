@@ -6,16 +6,34 @@ requires = ["poetry-core"]
 known_third_party = ["locust"]
 profile = "black"
 
+[tool.mypy]
+files = ["."]
+
 [tool.poetry]
 authors = []
 description = "Basic load testing for Palace API"
 name = "palace-api-load-test"
+packages = [
+    { include = "circulation_load_test", from = "src" },
+]
 readme = "README.md"
 version = "0"
 
 [tool.poetry.dependencies]
+atoma = ">=0.0.17,<0.0.18"
 locust = "^2.12.1"
 python = ">=3.7,<4"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^2.20.0"
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "src"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

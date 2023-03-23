@@ -4,7 +4,7 @@ from gevent.pool import Pool
 from locust import FastHttpUser, task
 
 
-class PalaceUser(FastHttpUser):
+class RegistryTests(FastHttpUser):
 
     host = "https://registry.palaceproject.io/"
 
