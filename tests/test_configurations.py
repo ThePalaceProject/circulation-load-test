@@ -2,22 +2,20 @@ import os
 from pathlib import Path
 
 import pytest
-from circulation_load_test.common.config import Configurations
-from circulation_load_test.common.config import Configuration
+
+from circulation_load_test.common.config import Configuration, Configurations
 
 
 class ConfigurationsFixture:
-
     def __init__(self, monkeypatch):
         self.monkeypatch = monkeypatch
 
     def load(self, name: str) -> Configuration:
-        self.monkeypatch.setenv('CIRCULATION_LOAD_CONFIGURATION_FILE', name)
+        self.monkeypatch.setenv("CIRCULATION_LOAD_CONFIGURATION_FILE", name)
         return Configurations.get()
 
     def close(self):
         Configurations.clear()
-        pass
 
 
 @pytest.fixture(scope="function")
@@ -29,7 +27,7 @@ def configurations_fixture(monkeypatch):
 
 class TestConfigurations:
     def test_load_missing_environment(self, monkeypatch):
-        monkeypatch.delenv('CIRCULATION_LOAD_CONFIGURATION_FILE', raising=False)
+        monkeypatch.delenv("CIRCULATION_LOAD_CONFIGURATION_FILE", raising=False)
         with pytest.raises(ValueError):
             Configurations.get()
 

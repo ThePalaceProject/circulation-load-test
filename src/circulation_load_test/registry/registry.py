@@ -1,10 +1,12 @@
 from urllib.parse import urlparse
 
 from gevent.pool import Pool
-from locust import FastHttpUser, task
+from locust import task
+
+from circulation_load_test.common.cmuser import CMHTTPUser
 
 
-class RegistryTests(FastHttpUser):
+class RegistryTests(CMHTTPUser):
 
     host = "https://registry.palaceproject.io/"
 

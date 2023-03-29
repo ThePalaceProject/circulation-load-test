@@ -1,8 +1,6 @@
 import json
 import os
-from typing import Any
-from typing import Dict
-from typing import Optional
+from typing import Any, Dict, Optional
 
 
 class CMUser:
@@ -20,21 +18,19 @@ class CMUser:
 
     @staticmethod
     def parse(name: str, data: Any) -> "CMUser":
-        primary = data.get('primary')
+        primary = data.get("primary")
         primary_b = False
         if primary is not None:
-            if primary.upper() == 'TRUE':
+            if primary.upper() == "TRUE":
                 primary_b = True
-            elif primary.upper() == 'FALSE':
+            elif primary.upper() == "FALSE":
                 primary_b = False
             else:
-                raise ValueError("'primary' must be 'true' or 'false' (got " + primary + ")")
+                raise ValueError(
+                    "'primary' must be 'true' or 'false' (got " + primary + ")"
+                )
 
-        return CMUser(
-            name,
-            data['password'],
-            primary_b
-        )
+        return CMUser(name, data["password"], primary_b)
 
 
 class CMConfiguration:
@@ -57,10 +53,10 @@ class CMConfiguration:
 
     @staticmethod
     def parse(data: Any) -> "CMConfiguration":
-        address = data['host']
+        address = data["host"]
 
         users_primary = False
-        users_in = data['users']
+        users_in = data["users"]
         users = {}
         for name, value in users_in.items():
             user = CMUser.parse(name, value)
@@ -92,7 +88,7 @@ class Configuration:
 
     @staticmethod
     def _parse(data: Any) -> "Configuration":
-        cm = CMConfiguration.parse(data['circulation_manager'])
+        cm = CMConfiguration.parse(data["circulation_manager"])
         return Configuration(cm)
 
 
@@ -104,9 +100,11 @@ class Configurations:
         if cls._configuration:
             return cls._configuration
 
-        location = os.getenv('CIRCULATION_LOAD_CONFIGURATION_FILE')
+        location = os.getenv("CIRCULATION_LOAD_CONFIGURATION_FILE")
         if not location:
-            raise ValueError('CIRCULATION_LOAD_CONFIGURATION_FILE environment variable is undefined')
+            raise ValueError(
+                "CIRCULATION_LOAD_CONFIGURATION_FILE environment variable is undefined"
+            )
 
         cls._configuration = Configuration.load(location)
         return cls._configuration

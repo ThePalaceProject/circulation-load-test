@@ -1,11 +1,12 @@
-from circulation_load_test.cm.basic import CMTests
-from circulation_load_test.common.cmauthdocument import CMAuthenticationLinkType
-from circulation_load_test.common.cmfeedwalk import CMFeedWalk
-from circulation_load_test.common.cmlogin import CMLogin
-from circulation_load_test.common.cmsearch import CMSearch
+import logging
+
 from locust.env import Environment
 
-import logging
+from circulation_load_test.cm.basic import CMTests
+from circulation_load_test.common.cmlogin import CMLogin
+from circulation_load_test.common.cmsearchbookmark import CMSearchAndBookmark
+from circulation_load_test.common.cmuser import CMAuthenticationLinkType
+
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -15,8 +16,8 @@ def main():
     user = CMTests(env)
     document = CMLogin.login(user)
     root = document.links[CMAuthenticationLinkType.CATALOG]
-    search_link = CMSearch.find_search_link(user, root)
-    search = CMSearch(search_link)
+    search_link = CMSearchAndBookmark.find_search_link(user, root)
+    search = CMSearchAndBookmark(search_link)
     search.execute(user)
 
 
