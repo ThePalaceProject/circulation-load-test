@@ -4,11 +4,12 @@ from gevent.pool import Pool
 from locust import task
 
 from circulation_load_test.common.cmuser import CMHTTPUser
+from circulation_load_test.common.config import Configurations
 
 
 class RegistryTests(CMHTTPUser):
 
-    host = "https://registry.palaceproject.io/"
+    host = Configurations.get().registry.address
 
     def fetch(self, url):
         parsed = urlparse(url)

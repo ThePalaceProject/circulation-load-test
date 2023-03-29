@@ -33,6 +33,20 @@ class CMUser:
         return CMUser(name, data["password"], primary_b)
 
 
+class RConfiguration:
+    address: str
+
+    def __init__(self, address: str):
+        super().__init__()
+        assert isinstance(address, str)
+        self.address = address
+
+    @staticmethod
+    def parse(data: Any) -> "RConfiguration":
+        address = data["host"]
+        return RConfiguration(address)
+
+
 class CMConfiguration:
     address: str
     users: Dict[str, CMUser]
@@ -75,11 +89,14 @@ class CMConfiguration:
 
 class Configuration:
     circulation_manager: CMConfiguration
+    registry: RConfiguration
 
-    def __init__(self, circulation_manager: CMConfiguration):
+    def __init__(self, circulation_manager: CMConfiguration, registry: RConfiguration):
         super().__init__()
         assert isinstance(circulation_manager, CMConfiguration)
+        assert isinstance(registry, RConfiguration)
         self.circulation_manager = circulation_manager
+        self.registry = registry
 
     @staticmethod
     def load(path: str) -> "Configuration":
@@ -89,7 +106,8 @@ class Configuration:
     @staticmethod
     def _parse(data: Any) -> "Configuration":
         cm = CMConfiguration.parse(data["circulation_manager"])
-        return Configuration(cm)
+        r = RConfiguration.parse(data["registry"])
+        return Configuration(cm, r)
 
 
 class Configurations:
