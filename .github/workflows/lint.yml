@@ -20,10 +20,14 @@ jobs:
 
       - name: Install Poetry
         uses: ThePalaceProject/circulation/.github/actions/poetry@main
+        with:
+          version: "1.3.2"
 
       - name: Install Pre-commit
         run: |
-          poetry install --only dev
+          poetry install --only ci
+        env:
+          POETRY_VIRTUALENVS_CREATE: false
 
       - name: Restore pre-commit cache
         uses: actions/cache@v3
@@ -33,4 +37,4 @@ jobs:
           restore-keys: pre-commit-${{ runner.os }}-py${{ env.PYTHON_VERSION }}
 
       - name: Lint
-        run: poetry run pre-commit run --all-files --show-diff-on-failure
+        run: pre-commit run --all-files --show-diff-on-failure
