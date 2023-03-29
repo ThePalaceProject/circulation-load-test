@@ -1,7 +1,9 @@
 from locust import tag, task
 
+from circulation_load_test.common.cmfeedwalk import CMFeedWalk
 from circulation_load_test.common.cmlogin import CMLogin
 from circulation_load_test.common.cmsearch import CMSearch
+from circulation_load_test.common.cmsearchbookmark import CMSearchAndBookmark
 from circulation_load_test.common.cmuser import CMAuthenticationLinkType, CMHTTPUser
 from circulation_load_test.common.config import Configurations
 
@@ -27,7 +29,7 @@ class CMTests(CMHTTPUser):
             allowed_link_relations={"collection", "related", "alternate"},
             maximum_visits=10,
         )
-        walk.execute(user)
+        walk.execute(self)
 
     @task
     @tag("search")
@@ -45,3 +47,6 @@ class CMTests(CMHTTPUser):
         """Borrow an open access book, and start producing a lot of bookmarks."""
         document = CMLogin.login(self)
         root = document.links[CMAuthenticationLinkType.CATALOG]
+        search_link = CMSearchAndBookmark.find_search_link(self, root)
+        search = CMSearchAndBookmark(search_link)
+        search.execute(self)
