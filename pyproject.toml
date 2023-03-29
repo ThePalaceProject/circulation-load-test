@@ -17,7 +17,7 @@ version = "0"
 locust = "^2.12.1"
 python = ">=3.8,<4"
 
-[tool.poetry.group.dev.dependencies]
+[tool.poetry.group.ci.dependencies]
 pre-commit = "^3.2"
 
 [tool.tomlsort]
