@@ -10,6 +10,12 @@ from circulation_load_test.common.cmuser import CMAuthenticationLinkType
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+#
+# This is a small demo file that shows how the various bits of "common" library
+# code can be called without having to go through the Locust frontend. This is
+# just for convenience during development.
+#
+
 
 def main():
     env = Environment()

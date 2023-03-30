@@ -11,7 +11,7 @@ These tests are built in Python using [Locust](https://locust.io/). The Locust p
 contains good [documentation](https://docs.locust.io/en/stable/writing-a-locustfile.html)
 about writing tests.
 
-## Running tests
+## Running Load Tests
 
 Install dependencies:
 
@@ -31,6 +31,8 @@ poetry run \
 The locust dashboard will then be available at: `http://localhost:8089`.
 
 ## Fair Warning
+
+*Do not run this code against production servers!*
 
 *Some tests involve borrowing books. Borrowing a book, on many CMs, will consume a license. This may cost money!*
 
@@ -66,4 +68,13 @@ as _primary_, as some tests will use this user as the default user for various r
     }
   }
 }
+```
+
+# Running Unit Tests
+
+Unit tests can be executed using [tox](https://pypi.org/project/tox/). At the time of writing, the only
+available environment is `py310` (which tests against Python 3.10.*):
+
+```sh
+tox -e py310
 ```

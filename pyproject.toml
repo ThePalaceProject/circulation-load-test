@@ -24,6 +24,13 @@ atoma = ">=0.0.17,<0.0.18"
 locust = "^2.12.1"
 python = ">=3.8,<4"
 
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.2.0,<8.0.0"
+
+[tool.poetry.group.ci.dependencies]
+pre-commit = "^3.2"
+tox = "^4.4"
+
 [tool.pytest.ini_options]
 pythonpath = [
     "src"
@@ -34,9 +41,6 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
-[tool.poetry.group.ci.dependencies]
-pre-commit = "^3.2"
 
 [tool.tomlsort]
 ignore_case = true
