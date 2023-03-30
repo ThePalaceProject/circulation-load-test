@@ -22,10 +22,7 @@ version = "0"
 [tool.poetry.dependencies]
 atoma = ">=0.0.17,<0.0.18"
 locust = "^2.12.1"
-python = ">=3.7,<4"
-
-[tool.poetry.group.dev.dependencies]
-pre-commit = "^2.20.0"
+python = ">=3.8,<4"
 
 [tool.pytest.ini_options]
 pythonpath = [
@@ -37,3 +34,15 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.poetry.group.ci.dependencies]
+pre-commit = "^3.2"
+
+[tool.tomlsort]
+ignore_case = true
+in_place = true
+sort_inline_arrays = true
+sort_table_keys = true
+spaces_before_inline_comment = 2
+spaces_indent_inline_array = 4
+trailing_comma_inline_array = true
