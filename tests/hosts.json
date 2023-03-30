@@ -1,0 +1,21 @@
+{
+  "registry": {
+    "host": "http://example2.example.com/"
+  },
+  "circulation_manager": {
+    "host": "http://example1.example.com/",
+    "users": {
+      "user0": {
+        "primary": "true",
+        "password": "abcd1234"
+      },
+      "user1": {
+        "primary": "false",
+        "password": "abcd1234"
+      },
+      "user2": {
+        "password": "abcd1234"
+      }
+    }
+  }
+}
