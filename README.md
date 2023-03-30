@@ -70,7 +70,7 @@ as _primary_, as some tests will use this user as the default user for various r
 }
 ```
 
-# Running Unit Tests
+## Running Unit Tests
 
 Unit tests can be executed using [tox](https://pypi.org/project/tox/). At the time of writing, the only
 available environment is `py310` (which tests against Python 3.10.*):
