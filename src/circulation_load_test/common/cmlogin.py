@@ -34,6 +34,29 @@ class CMLogin:
         return document
 
     @staticmethod
+    def login_specific(user: CMHTTPUser, library_id: str) -> CMAuthDocument:
+        config = Configurations.get()
+        cm: CMConfiguration = config.circulation_manager
+
+        # Fetch the root feed. This will typically contain a link to an authentication document.
+        root_address = f"{cm.address}/{library_id}"
+        response = user.client.get(root_address)
+        response.raise_for_status()
+
+        text = response.text
+        feed = atoma.parse_atom_bytes(bytes(text, "utf-8"))
+        for link in feed.links:
+            if link.rel == "http://opds-spec.org/auth/document":
+                return CMLogin._handle_auth_document(user, link)
+
+        # Synthesize a fake authentication document that supplies a starting link
+        links = {}
+        links[CMAuthenticationLinkType.CATALOG] = root_address
+        document = CMAuthDocument(auth_types={}, links=links)
+        user.auth_document = document
+        return document
+
+    @staticmethod
     def _handle_auth_document(user: CMHTTPUser, link: AtomLink) -> CMAuthDocument:
         response = user.client.get(link.href)
         text = response.text
