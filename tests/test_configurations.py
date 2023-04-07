@@ -36,6 +36,7 @@ class TestConfigurations:
         config = configurations_fixture.load(file)
         assert "http://example1.example.com/" == config.circulation_manager.address
         assert 3 == len(config.circulation_manager.users)
+        assert {"HAZELNUT", "WALNUT"} == config.circulation_manager.library_identifiers
 
     def test_load_bad_user_0(self, configurations_fixture: ConfigurationsFixture):
         file = os.path.join(Path(__file__).parent, "hosts_user_bad_0.json")

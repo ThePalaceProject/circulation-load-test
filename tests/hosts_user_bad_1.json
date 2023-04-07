@@ -8,6 +8,10 @@
       "user1": {
         "password": "abcd1234"
       }
-    }
+    },
+    "library_identifiers": [
+      "HAZELNUT",
+      "WALNUT"
+    ]
   }
 }

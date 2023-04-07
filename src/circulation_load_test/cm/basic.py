@@ -1,3 +1,5 @@
+import random
+
 from locust import tag, task
 
 from circulation_load_test.common.cmfeedwalk import CMFeedWalk
@@ -13,12 +15,24 @@ class CMTests(CMHTTPUser):
     host = Configurations.get().circulation_manager.address
 
     @task
+    @tag("cm")
     @tag("login")
     def login(self):
         """Check how long it takes to log in to the target CM."""
         CMLogin.login(self)
 
     @task
+    @tag("cm")
+    @tag("login_multiple")
+    def login_multiple(self):
+        """Check how long it takes to log in to the target CM."""
+        id = random.choice(
+            list(Configurations.get().circulation_manager.library_identifiers)
+        )
+        CMLogin.login_specific(self, id)
+
+    @task
+    @tag("cm")
     @tag("feeds")
     def random_feed_walk(self):
         """Walk through feeds at random until reaching a maximum depth."""
@@ -32,6 +46,7 @@ class CMTests(CMHTTPUser):
         walk.execute(self)
 
     @task
+    @tag("cm")
     @tag("search")
     def random_search(self):
         """Perform a random search and walk through all the results."""
@@ -42,6 +57,7 @@ class CMTests(CMHTTPUser):
         search.execute(self)
 
     @task
+    @tag("cm")
     @tag("bookmarks")
     def bookmarks(self):
         """Borrow an open access book, and start producing a lot of bookmarks."""
