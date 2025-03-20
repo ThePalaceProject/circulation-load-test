@@ -47,6 +47,9 @@ and [Circulation Manager](https://github.com/ThePalaceProject/circulation) insta
 run. For the CM, a list of users (along with their passwords) must also be specified. One user must be declared
 as _primary_, as some tests will use this user as the default user for various reasons.
 
+The configuration file also contains a list of library identifiers that must exist on the target CM. These
+are used by tests that want to try making requests to random libraries.
+
 ```json
 {
   "registry": {
@@ -65,7 +68,12 @@ as _primary_, as some tests will use this user as the default user for various r
       "user2": {
         "password": "abcd1234"
       }
-    }
+    },
+    "library_identifiers": [
+      "Library1",
+      "Library2",
+      "Library3"
+    ]
   }
 }
 ```

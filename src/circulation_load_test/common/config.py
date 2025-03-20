@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Set
 
 
 class CMUser:
@@ -50,13 +50,17 @@ class RConfiguration:
 class CMConfiguration:
     address: str
     users: Dict[str, CMUser]
+    library_identifiers: Set[str]
 
-    def __init__(self, address: str, users: Dict[str, CMUser]):
+    def __init__(
+        self, address: str, users: Dict[str, CMUser], library_identifiers: Set[str]
+    ):
         super().__init__()
         assert isinstance(address, str)
         assert isinstance(users, dict)
         self.address = address
         self.users = users
+        self.library_identifiers = library_identifiers
 
     def user_primary(self) -> CMUser:
         for name in self.users.keys():
@@ -68,6 +72,9 @@ class CMConfiguration:
     @staticmethod
     def parse(data: Any) -> "CMConfiguration":
         address = data["host"]
+
+        library_ids_in = data["library_identifiers"]
+        library_ids = set(library_ids_in)
 
         users_primary = False
         users_in = data["users"]
@@ -84,7 +91,7 @@ class CMConfiguration:
         if not users_primary:
             raise ValueError("Exactly one primary user must be defined!")
 
-        return CMConfiguration(address, users)
+        return CMConfiguration(address, users, library_ids)
 
 
 class Configuration:
